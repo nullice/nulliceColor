@@ -31,6 +31,19 @@ export default class NulliceColor {
     /** 根据配置创建色彩空间*/
     static creatColorSpace = creatColorSpace
 
+    /** 根据色彩空间名获取色彩空间*/
+    static getColorSpaceByName(name: string) {
+        if ((<any>NulliceColor.ColorSpaces)[name]) {
+            return (<any>NulliceColor.ColorSpaces)[name]
+        }
+
+        for (let key in NulliceColor.ColorSpaces) {
+            if (key.toLowerCase() == name.replace(/\W/g, "_")) {
+                return (<any>NulliceColor.ColorSpaces)[key]
+            }
+        }
+    }
+
     constructor(...args: any[]) {
         Object.defineProperty(this, "colorModel", {
             value: undefined,
@@ -93,6 +106,7 @@ export default class NulliceColor {
         let newRgb: any = { colorSpace: newColorSpace }
         ;(<any>xyz).colorSpace = newColorSpace
         newRgb = ColorModels.XYZ.toRGB(xyz)
+        console.log("xyz => rgb_2", newRgb)
 
         // rgb_2 => color
         let re
@@ -163,10 +177,25 @@ export default class NulliceColor {
      */
     toNewColor(color: NulliceColor = new NulliceColor(), targetColorSpace?: IColorSpace): NulliceColor {
         color.colorSpace = targetColorSpace || this.colorSpace
-        if (!this.colorModel) throw new Error("[EssenceColor] colorModel not found.")
+        if (!this.colorModel) throw new Error("[NulliceColor] colorModel not found.")
         if (!color.colorModel) color.colorModel = this.colorModel
         color.colorModel.fromRGB(color, this.colorModel.toRGB(this))
         return color
+    }
+
+    /**
+     * 设置色彩空间
+     * @param colorSpace
+     */
+    setColorSpace(colorSpace: ColorSpace | string) {
+        if (typeof colorSpace == "string") {
+            colorSpace = NulliceColor.getColorSpaceByName(colorSpace)
+        }
+
+        if (!colorSpace) throw Error("[NulliceColor] no colorSpace.")
+        if (!(<any>colorSpace).RGB2XYZ_MATRIX) throw Error("[NulliceColor] invalid colorSpace.")
+
+        this.colorSpace = <ColorSpace>colorSpace
     }
 }
 

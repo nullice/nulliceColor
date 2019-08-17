@@ -7,6 +7,14 @@ import ColorModel_XYZ from "./ColorModels/ColorModel.XYZ"
 import ColorSpace_sRGB from "./ColorSpace/ColorSpace.sRGB"
 import ColorSpace_sRGB_D65 from "./ColorSpace/ColorSpace.sRGB_D65"
 import ColorSpace_DisplayP3 from "./ColorSpace/ColorSpace.DisplayP3"
+import ColorSpace_Rec709 from "./ColorSpace/ColorSpace.Rec709"
+import ColorSpace_Rec2020 from "./ColorSpace/ColorSpace.Rec2020"
+import ColorSpace_ACES_CG_Linear from "./ColorSpace/ColorSpace.ACES_CG_Linear"
+import ColorSpace_AdobeRGB from "./ColorSpace/ColorSpace.AdobeRGB"
+import ColorSpace_CIE_RGB from "./ColorSpace/ColorSpace.CIE_RGB"
+import ColorSpace_AppleRGB from "./ColorSpace/ColorSpace.AppleRGB"
+import ColorSpace_ColorMatchRGB from "./ColorSpace/ColorSpace.ColorMatchRGB"
+import ColorSpace_ProPhotoRGB from "./ColorSpace/ColorSpace.ProPhotoRGB"
 import IColorModel from "./ColorModels/ColorModel"
 import ColorSpace from "./ColorSpace/ColorSpace"
 
@@ -22,7 +30,15 @@ export let ColorModels = {
 export let ColorSpaces = {
     sRGB: ColorSpace_sRGB,
     sRGB_D65: ColorSpace_sRGB_D65,
-    DisplayP3: ColorSpace_DisplayP3
+    DisplayP3: ColorSpace_DisplayP3,
+    Rec709: ColorSpace_Rec709,
+    Rec2020: ColorSpace_Rec2020,
+    ACES_CG_Linear: ColorSpace_ACES_CG_Linear,
+    AdobeRGB: ColorSpace_AdobeRGB,
+    CIE_RGB: ColorSpace_CIE_RGB,
+    AppleRGB: ColorSpace_AppleRGB,
+    ColorMatchRGB: ColorSpace_ColorMatchRGB,
+    ProPhotoRGB: ColorSpace_ProPhotoRGB,
 }
 
 export const ALIAS = {

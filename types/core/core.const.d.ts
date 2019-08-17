@@ -12,6 +12,14 @@ export declare let ColorSpaces: {
     sRGB: ColorSpace;
     sRGB_D65: ColorSpace;
     DisplayP3: ColorSpace;
+    Rec709: ColorSpace;
+    Rec2020: ColorSpace;
+    ACES_CG_Linear: ColorSpace;
+    AdobeRGB: ColorSpace;
+    CIE_RGB: ColorSpace;
+    AppleRGB: ColorSpace;
+    ColorMatchRGB: ColorSpace;
+    ProPhotoRGB: ColorSpace;
 };
 export declare const ALIAS: {
     alpha: string[];

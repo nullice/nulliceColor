@@ -14,50 +14,30 @@ export function getColorFromArgs(args: any[], out: NulliceColor) {
         case 1: {
             // 直接输入对象
             if (typeof args[0] === "object") {
-                // 目的地有模型
-                if (out.colorModel) {
-                    out.colorModel.inputColor(out, args[0])
-                } else {
-                    // 常用色彩模型的判断
-                    if (ColorModels.RGB.isMatchedColor(args[0]))
-                        ColorModels.RGB.inputColor(<any>out, args[0]), (out.colorModel = ColorModels.RGB)
-                    if (ColorModels.HSL.isMatchedColor(args[0]))
-                        ColorModels.HSL.inputColor(<any>out, args[0]), (out.colorModel = ColorModels.HSL)
-                    if (ColorModels.HSV.isMatchedColor(args[0]))
-                        ColorModels.HSV.inputColor(<any>out, args[0]), (out.colorModel = ColorModels.HSV)
-
-                    for (let key in ColorModels) {
-                        let model: ColorModel<any> = (<any>ColorModels)[key]
-                        if (model.isMatchedColor(args[0])) {
-                            model.inputColor(out, args[0])
-                            out.colorModel = model
-                            return
-                        }
-                    }
-                }
+                paresObject(args[0], out)
             }
             // 输入字符串
             else if (typeof args[0] === "string") {
                 let str = args[0]
-
-                if (str[0] === "#") {
-                    ColorFormat_HEXA.parse(str, out)
-                } else if (str.slice(0, 4).toLowerCase() === "rgba") {
-                    ColorFormat_RGBA.parse(str, out)
-                } else if (str.slice(0, 3).toLowerCase() === "rgb") {
-                    ColorFormat_RGB.parse(str, out)
-                } else if (str.slice(0, 4).toLowerCase() === "hsla") {
-                    ColorFormat_HSLA.parse(str, out)
-                } else if (str.slice(0, 3).toLowerCase() === "hsl") {
-                    ColorFormat_HSL.parse(str, out)
-                }
-
-
+                paresString(str, out)
             }
             break
         }
 
         case 2: {
+            // 直接输入对象
+            if (typeof args[0] === "object") {
+                paresObject(args[0], out)
+            }
+            // 输入字符串
+            else if (typeof args[0] === "string") {
+                let str = args[0]
+                paresString(str, out)
+            }
+
+            // 第二个参数设置色彩空间
+            out.setColorSpace(args[1])
+
             break
         }
 
@@ -68,6 +48,44 @@ export function getColorFromArgs(args: any[], out: NulliceColor) {
         case 4: {
             break
         }
+    }
+}
+
+function paresObject(ob: any, out: NulliceColor) {
+    // 目的地有模型
+    if (out.colorModel) {
+        out.colorModel.inputColor(out, ob)
+    } else {
+        // 常用色彩模型的判断
+        if (ColorModels.RGB.isMatchedColor(ob))
+            ColorModels.RGB.inputColor(<any>out, ob), (out.colorModel = ColorModels.RGB)
+        if (ColorModels.HSL.isMatchedColor(ob))
+            ColorModels.HSL.inputColor(<any>out, ob), (out.colorModel = ColorModels.HSL)
+        if (ColorModels.HSV.isMatchedColor(ob))
+            ColorModels.HSV.inputColor(<any>out, ob), (out.colorModel = ColorModels.HSV)
+
+        for (let key in ColorModels) {
+            let model: ColorModel<any> = (<any>ColorModels)[key]
+            if (model.isMatchedColor(ob)) {
+                model.inputColor(out, ob)
+                out.colorModel = model
+                return
+            }
+        }
+    }
+}
+
+function paresString(str: string, out: any) {
+    if (str[0] === "#") {
+        ColorFormat_HEXA.parse(str, out)
+    } else if (str.slice(0, 4).toLowerCase() === "rgba") {
+        ColorFormat_RGBA.parse(str, out)
+    } else if (str.slice(0, 3).toLowerCase() === "rgb") {
+        ColorFormat_RGB.parse(str, out)
+    } else if (str.slice(0, 4).toLowerCase() === "hsla") {
+        ColorFormat_HSLA.parse(str, out)
+    } else if (str.slice(0, 3).toLowerCase() === "hsl") {
+        ColorFormat_HSL.parse(str, out)
     }
 }
 

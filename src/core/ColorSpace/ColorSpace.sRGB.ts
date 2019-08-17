@@ -1,4 +1,4 @@
-import IColorSpace from "./ColorSpace"
+import IColorSpace, { forNaN } from "./ColorSpace"
 import { ReferencePrimaryColor, ReferenceWhite } from "../Reference/ReferencePoints"
 
 const GAMMA = 2.4
@@ -6,18 +6,19 @@ const GAMMA_RECI = 0.41666667 //  1/GAMMA
 
 let ColorSpace_sRGB: IColorSpace = {
     name: "sRGB",
+
     enGamma(value: number): number {
         if (value > 0.0031308 /*0.0031306684425005883*/) {
             return 1.055 * Math.pow(value, GAMMA_RECI) - 0.055
         }
-        return 12.92 * value
+        return forNaN(12.92 * value)
     },
 
     deGamma(value: number): number {
         if (value < 0.04045) {
-            return value / 12.92
+            return forNaN(value / 12.92)
         }
-        return Math.pow((value + 0.055) / 1.055, GAMMA)
+        return forNaN(Math.pow((value + 0.055) / 1.055, GAMMA))
     },
 
     WHITE_POINT: ReferenceWhite.D50,

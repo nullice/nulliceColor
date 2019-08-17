@@ -29,3 +29,4 @@ export interface IColorSpaceConfig {
  * @param config
  */
 export declare function creatColorSpace(config: IColorSpaceConfig): IColorSpace;
+export declare function forNaN(number: number): number;

@@ -5,8 +5,4 @@ test("RGB to HSL", () => {
     expect(color).toEqual({ alpha: 1, r: 255, g: 34, b: 68 })
     let hsl = color.getHSL()
     expect(hsl).toEqual({ alpha: 1, h: 351, s: 100, l: 57 })
-
-
-
-
 })

@@ -1,4 +1,4 @@
-import IColorSpace from "./ColorSpace"
+import IColorSpace, { forNaN } from "./ColorSpace"
 import { ReferencePrimaryColor, ReferenceWhite } from "../Reference/ReferencePoints"
 
 const GAMMA = 2.4
@@ -15,16 +15,16 @@ let ColorSpace_DispalyP3: IColorSpace = {
     name: "DispalyP3",
     enGamma(value: number): number {
         if (value >= 0.00308) {
-            return 1.055 * Math.pow(value, GAMMA_RECI) - 0.05486
+            return forNaN(1.055 * Math.pow(value, GAMMA_RECI) - 0.05486)
         }
-        return value * 12.987
+        return forNaN(value * 12.987)
     },
 
     deGamma(value: number): number {
         if (value >= 0.04) {
-            return Math.pow(0.9478 * value + 0.052, GAMMA)
+            return forNaN(Math.pow(0.9478 * value + 0.052, GAMMA))
         }
-        return value * 0.077
+        return forNaN(value * 0.077)
     },
 
     WHITE_POINT: ReferenceWhite.D50,
@@ -46,11 +46,11 @@ let ColorSpace_DispalyP3: IColorSpace = {
     ],
 
     toString(): string {
-        return "sRGB"
+        return this.name
     },
 
     toJSON(): string {
-        return "sRGB"
+        return this.name
     }
 }
 

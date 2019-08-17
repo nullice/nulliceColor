@@ -47,7 +47,6 @@ export interface IColorSpaceConfig {
     enGamma: (value: number) => number
 }
 
-
 /**
  * 根据配置创建一个色彩空间
  * @param config
@@ -64,8 +63,8 @@ export function creatColorSpace(config: IColorSpaceConfig) {
         enGamma: config.enGamma,
         deGamma: config.deGamma,
 
-        RGB2XYZ_MATRIX: RGB2XYZ_MAT,
-        XYZ2RGB_MATRIX: Util.matrixInverse_33(RGB2XYZ_MAT),
+        RGB2XYZ_MATRIX: RGB2XYZ_MAT.map(x => parseFloat(x.toFixed(5))),
+        XYZ2RGB_MATRIX: Util.matrixInverse_33(RGB2XYZ_MAT).map(x => parseFloat(x.toFixed(5))),
 
         toString() {
             return config.name
@@ -76,5 +75,12 @@ export function creatColorSpace(config: IColorSpaceConfig) {
     }
 
     return colorSpace
+}
 
+export function forNaN(number: number) {
+    if (Number.isNaN(number)) {
+        return 0
+    } else {
+        return number
+    }
 }

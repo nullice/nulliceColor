@@ -30,8 +30,8 @@ let ColorModel_XYZ: IColorModel<IObjectXYZ> = {
 
     toRGB(color: any) {
         let colorSpace = color.colorSpace || ColorSpace_sRGB
-        let rgbArray = XYZArray_to_RGBArray([color.x, color.y, color.z], colorSpace.XYZ2RGB_MATRIX)
 
+        let rgbArray = XYZArray_to_RGBArray([color.x, color.y, color.z], colorSpace.XYZ2RGB_MATRIX)
         // Gamma 变换，把色彩值的转化为适应人眼的
         return {
             r: util.normalInt256(colorSpace.enGamma(rgbArray[0]) * 255),

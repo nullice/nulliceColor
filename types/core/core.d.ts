@@ -21,9 +21,19 @@ export default class NulliceColor {
         sRGB: IColorSpace;
         sRGB_D65: IColorSpace;
         DisplayP3: IColorSpace;
+        Rec709: IColorSpace;
+        Rec2020: IColorSpace;
+        ACES_CG_Linear: IColorSpace;
+        AdobeRGB: IColorSpace;
+        CIE_RGB: IColorSpace;
+        AppleRGB: IColorSpace;
+        ColorMatchRGB: IColorSpace;
+        ProPhotoRGB: IColorSpace;
     };
     /** 根据配置创建色彩空间*/
     static creatColorSpace: typeof creatColorSpace;
+    /** 根据色彩空间名获取色彩空间*/
+    static getColorSpaceByName(name: string): any;
     constructor(...args: any[]);
     /**
      * 根据一个输入设置色彩值
@@ -73,6 +83,11 @@ export default class NulliceColor {
      * @param targetColorSpace
      */
     toNewColor(color?: NulliceColor, targetColorSpace?: IColorSpace): NulliceColor;
+    /**
+     * 设置色彩空间
+     * @param colorSpace
+     */
+    setColorSpace(colorSpace: ColorSpace | string): void;
 }
 export declare class ColorRGB extends NulliceColor implements IObjectRGB {
     colorModel: IColorModel<IObjectRGB>;
